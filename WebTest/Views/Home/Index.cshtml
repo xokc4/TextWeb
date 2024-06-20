@@ -1,0 +1,48 @@
+﻿@using WebTest.Models.BD
+@model List<Pricelist>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="~/css/site.css">
+</head>
+<body>
+<div>
+    <h1>
+        Прайсы
+    </h1>
+</div>
+<div class="mb-3">
+    <!-- Добавлен класс mb-3 для отступа снизу -->
+        <form asp-action="AddPriceList" asp-controller="AddPriceList" method="get">
+            <button type="submit" class="btn btn-primary float-left button-add-price">
+            Прайс-лист
+        </button>
+    </form>
+</div>
+<div class="mt-3">
+    <!-- Добавлен класс mt-3 для отступа сверху -->
+    <table class="table table-bordered">
+        <!-- Добавлен класс table-bordered для границ вокруг ячеек -->
+        <thead>
+            <tr>
+                <th scope="col">№</th>
+                <th scope="col">Название</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pricelist in Model)
+            {
+                <tr>
+                    <td>@pricelist.IdPriceList</td>
+                     <td><a asp-action="SelectList" asp-controller="SelectList" asp-route-id="@pricelist.IdOnlystring">
+                         @pricelist.Name
+                     </a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+</body>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">

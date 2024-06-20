@@ -1,0 +1,58 @@
+﻿@using WebTest.ViewModels
+@model ListTableModel
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="text-black-50 font-weight-bold">@Model.Pricelist.Name</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="d-flex">
+            <form asp-action="AddColumn" asp-controller="AddColumn" asp-route-id="@Model.Pricelist.IdOnlystring" class="mb-2">
+                <button type="submit" class="btn btn-success">
+                    + Добавить позицию
+                </button>
+            </form>
+            <form asp-action="Index" asp-controller="Home">
+                <button type="submit" class="btn btn-light ml-1">
+                    Назад к списку
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Название товара</th>
+                        <th scope="col">Код товара</th>
+                        @foreach (var Column in Model.ColumnElementHead)
+                        {
+                            <th scope="col">@Column.NameColumn</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var element in Model.Elements)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(element.NameProduct, "Editlines", "Editlines", new { idLines = element.IdElement, idPriceList = Model.Pricelist.IdPriceList }, null)</td>
+                            <td>@element.IndexProduct</td>
+                            @foreach (var column in Model.ColumnElementPars)
+                            {
+                                if (element.IdOne == column.IdOneColumn)
+                                {
+                                    <td>
+                                        @column.ContentColumn
+                                    </td>
+                                }
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">

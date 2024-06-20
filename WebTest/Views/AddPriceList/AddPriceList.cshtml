@@ -1,0 +1,55 @@
+﻿@model WebTest.ViewModels.AddPriceListModel
+
+@{
+    ViewData["Title"] = "Добавление прайс-листа";
+}
+
+<div class="container mt-4">
+    <h1>Добавление прайс-листа</h1>
+    <div class="d-flex align-items-center mb-3">
+        <form id="priceListForm" onsubmit="submitData(event)" class="mr-2">
+            <button type="submit" class="btn btn-success">Продолжить</button>
+        </form>
+        <form asp-controller="AddPriceList" asp-action="Back">
+            <button type="submit" class="btn btn-outline-secondary">Назад</button>
+        </form>
+    </div>
+    <div>
+        <form id="priceListForm">
+            <div class="form-group">
+                <label for="listName">Название прайс-листа:</label>
+                <input type="text" id="listName" name="listName" class="form-control" />
+            </div>
+            <table class="table table-bordered mt-4" id="priceListTable">
+                <tbody>
+                    @if (Model.Rows != null && Model.Rows.Any())
+                    {
+                        foreach (var row in Model.Rows)
+                        {
+                            <tr>
+                                <td>@row[0]</td>
+                                <td><input type="text" class="form-control" name="row[@Model.Rows.IndexOf(row)].Value1" /></td>
+                                <td>
+                                    <select class="form-control" name="row[@Model.Rows.IndexOf(row)].Type">
+                                        <option value="text">Текст</option>
+                                        <option value="number">Число</option>
+                                        <option value="date">Дата</option>
+                                    </select>
+                                </td>
+                                <td><button type="button" class="btn btn-danger" onclick="removeRow(@Model.Rows.IndexOf(row))">Удалить</button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-warning mt-2" onclick="addRow()">Добавить колонку</button>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/site.js"></script>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+
+

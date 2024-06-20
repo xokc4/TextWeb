@@ -1,0 +1,72 @@
+﻿@using WebTest.ViewModels
+@model EditLinesModel
+<div class="container">
+    <h1>изменение товара</h1>
+    <hr class="my-4">
+    <form asp-action="Read" asp-controller="Editlines" asp-route-id="@Model.pricelists.IdOnlystring" method="post">
+        <div class="form-group">
+            <div class="form-row">
+                <div class="col">
+                    <label for="name">Название</label>
+                    <input type="hidden" name="element.IdElement" value="@Model.element.IdElement" />
+                    <input type="hidden" name="element.IdOnlystring" value="@Model.element.IdOnlystring" />
+                    <input type="hidden" name="element.IdOne" value="@Model.element.IdOne" />
+                    <input type="text" class="form-control" id="NameProduct" name="element.NameProduct" value="@Model.element.NameProduct" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <label for="article">Артикул</label>
+                    <input type="text" class="form-control" id="IndexProduct" name="element.IndexProduct" value="@Model.element.IndexProduct" required>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                        @{
+                            int a = 0;
+                        }
+                        @foreach (var column in Model.ColumnElementPars)
+                        {
+                            <input type="hidden" name="ColumnElementPars[@a].IdColumn" value="@column.IdColumn" />
+
+
+                            <input type = "hidden" name = "ColumnElementPars[@a].IdOnlyString" value = "@column.IdOnlyString" />
+
+
+                            <input type = "hidden" name = "ColumnElementPars[@a].IdOneColumn" value = "@column.IdOneColumn" />
+
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control"
+                                           name="ColumnElementPars[@a].NameColumn" value="@column.NameColumn" required readonly>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" name="ColumnElementPars[@a].ContentColumn" value="@column.ContentColumn" required>
+                                </td>
+                            </tr>
+                            a++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <hr class="my-4">
+            <div class="float-left mt-3">
+                <a href="#!" onclick="return confirmDelete('@Url.Action("Delete", "Editlines", new { id = Model.element.IdElement, idOne = Model.element.IdOne })')" class="btn btn-danger">Удалить</a>
+                <button type="submit" class="btn btn-warning">Изменить</button>
+                <a asp-action="SelectList" asp-controller="SelectList" asp-route-id="@Model.pricelists.IdOnlystring" class="btn btn-secondary">Назад</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function confirmDelete(url) {
+        if (confirm("Вы уверены, что хотите удалить этот элемент?")) {
+            window.location.href = url;
+            return true;
+        }
+        return false;
+    }
+</script>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
